@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.codepath.apps.restclienttemplate.TimeFormatter;
+
 public class Tweet {
 
     public String body;
@@ -30,4 +32,7 @@ public class Tweet {
         return tweets;
     }
 
+    public String getFormattedTimestamp() {
+        return TimeFormatter.getTimeDifference(createdAt);
+    }
 }
