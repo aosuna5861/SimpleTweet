@@ -65,7 +65,7 @@ public class TimelineActivity extends AppCompatActivity {
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.i(TAG, "onLoadMore" + page);
+                Log.i(TAG, "onLoadMore: " + page);
                 loadMoreData();
             }
         };
@@ -78,9 +78,21 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void loadMoreData() {
         // 1. Send an API request to retrieve appropriate paginated data
-        // 2. Deserialize and construct new model objects from the API response
-        // 3. Append the new data objects to the existing set of items inside the array of items
-        // 4. Notify the adapter of the new items made with `notifyItemRangeInserted()`
+        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess for loadMoreData" + json.toString());
+                // 2. Deserialize and construct new model objects from the API response
+                // 3. Append the new data objects to the existing set of items inside the array of items
+                // 4. Notify the adapter of the new items made with `notifyItemRangeInserted()`
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure for loadMoreData", throwable);
+            }
+        }, tweets.get(tweets.size() - 1).id);
+
     }
 
     private void populateHomeTimeline() {
