@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -94,7 +95,6 @@ public class TimelineActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // 4. Notify the adapter of the new items made with `notifyItemRangeInserted()`
             }
 
             @Override
@@ -117,9 +117,11 @@ public class TimelineActivity extends AppCompatActivity {
             // Compose selected
             Log.i(TAG, "Compose successfully selected");
             // Navigate to compose activity
-
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void populateHomeTimeline() {
