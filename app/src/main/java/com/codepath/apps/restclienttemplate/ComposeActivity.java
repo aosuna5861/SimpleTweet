@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
@@ -49,7 +51,7 @@ public class ComposeActivity extends AppCompatActivity {
                     Toast.makeText(ComposeActivity.this, "Sorry, your tweet is too long", Toast.LENGTH_LONG).show();
                     return;
                 }
-                Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
+
                 // add api call to Twitter for click to publish text as a tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
@@ -58,6 +60,10 @@ public class ComposeActivity extends AppCompatActivity {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Published tweet: " + tweet.body);
+                            Intent data = new Intent();
+                            data.putExtra("tweet", Parcels.wrap(tweet));
+                            setResult(RESULT_OK, data);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
