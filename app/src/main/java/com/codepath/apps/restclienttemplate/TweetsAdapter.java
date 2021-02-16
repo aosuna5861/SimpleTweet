@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvTweetBody = itemView.findViewById(R.id.tvTweetBody);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
         }
+
 
         public void bind(Tweet tweet) {
             tvTweetBody.setText(tweet.body);
